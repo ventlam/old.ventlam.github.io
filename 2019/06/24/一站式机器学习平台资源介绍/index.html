@@ -7,15 +7,19 @@
 
 
 
-    <meta property="og:type" content="article">
+    <meta name="description" content="1. 缘起近日和公司同学分享了推荐系统的构建、策略、算法等相关内容。由于课程长度缘故，来不及和大家实践一下，如何实现一个简单推荐系统的CTR预估模型。于是，课后想分享一个基于Jupyter Notebook的demo，发现居然一时间找不到国内可以用于分享、协作、运行的机器学习平台。通过google找到了几个一站式的机器学习平台，它们的特点都是基于Jupyter Notebook 构建的，都能够在上">
+<meta name="keywords" content="-ml">
+<meta property="og:type" content="article">
 <meta property="og:title" content="一站式机器学习平台资源介绍">
 <meta property="og:url" content="http://yoursite.com/2019/06/24/一站式机器学习平台资源介绍/index.html">
 <meta property="og:site_name" content="林场的梦">
+<meta property="og:description" content="1. 缘起近日和公司同学分享了推荐系统的构建、策略、算法等相关内容。由于课程长度缘故，来不及和大家实践一下，如何实现一个简单推荐系统的CTR预估模型。于是，课后想分享一个基于Jupyter Notebook的demo，发现居然一时间找不到国内可以用于分享、协作、运行的机器学习平台。通过google找到了几个一站式的机器学习平台，它们的特点都是基于Jupyter Notebook 构建的，都能够在上">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-06-24T13:47:17.000Z">
+<meta property="og:updated_time" content="2019-06-24T14:10:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一站式机器学习平台资源介绍">
+<meta name="twitter:description" content="1. 缘起近日和公司同学分享了推荐系统的构建、策略、算法等相关内容。由于课程长度缘故，来不及和大家实践一下，如何实现一个简单推荐系统的CTR预估模型。于是，课后想分享一个基于Jupyter Notebook的demo，发现居然一时间找不到国内可以用于分享、协作、运行的机器学习平台。通过google找到了几个一站式的机器学习平台，它们的特点都是基于Jupyter Notebook 构建的，都能够在上">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -147,7 +151,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    a few seconds read (About 0 words)
+                    8 minutes read (About 1254 words)
                 </span>
                 
                 
@@ -160,7 +164,83 @@
             
         </h1>
         <div class="content">
-            
+            <h2 id="1-缘起"><a href="#1-缘起" class="headerlink" title="1. 缘起"></a>1. 缘起</h2><p>近日和公司同学分享了推荐系统的构建、策略、算法等相关内容。由于课程长度缘故，来不及和大家实践一下，如何实现一个简单推荐系统的CTR预估模型。于是，课后想分享一个基于Jupyter Notebook的demo，发现居然一时间找不到国内可以用于分享、协作、运行的机器学习平台。通过google找到了几个一站式的机器学习平台，它们的特点都是基于Jupyter Notebook 构建的，都能够在上面开发、调试、训练、运行、分享机器学习相关的代码集和数据集。</p>
+<h3 id="1-1-Jupyter-NoteBook"><a href="#1-1-Jupyter-NoteBook" class="headerlink" title="1.1 Jupyter NoteBook"></a>1.1 Jupyter NoteBook</h3><p>首先回顾介绍Jupyter Notebook，根据官网的介绍，Jupyter是一种可以允许用户创建、分享代码、公式、可视化等富文本的web 应用。用户通常在上面做数据清洗、数据转换、数值计算、统计建模、机器学习等等。可以说Jupyter是数据科学家最常用、最好用的工具之一，可以快速的对数据处理、可视化、建模，可以说是数据科学的事实标准编辑器了。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/20467-bea8f99b745e6efe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Jupyter官网介绍"></p>
+<h3 id="1-2-免费平台资源"><a href="#1-2-免费平台资源" class="headerlink" title="1.2 免费平台资源"></a>1.2 免费平台资源</h3><table>
+<thead>
+<tr>
+<th>平台名称</th>
+<th>计算核心</th>
+<th>核心运行时</th>
+<th>内存</th>
+<th>存储</th>
+<th>支持语言</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://colab.research.google.com/" target="_blank" rel="noopener">google colab</a></td>
+<td>CPU 2cores /GPU tesla k80s 1core/TPU  8cores</td>
+<td>12个小时</td>
+<td>12G</td>
+<td>50G</td>
+<td>py2,py3</td>
+</tr>
+<tr>
+<td><a href="https://www.kaggle.com/kernels" target="_blank" rel="noopener">kaggle kernel</a></td>
+<td>CPU 4 cores/GPU 2cores</td>
+<td>6个小时</td>
+<td>16G/12G</td>
+<td>1G</td>
+<td>py2,py3</td>
+</tr>
+<tr>
+<td><a href="https://notebooks.azure.com/" target="_blank" rel="noopener">Azure Notebooks</a></td>
+<td>未知</td>
+<td>未知</td>
+<td>4GB</td>
+<td>1G</td>
+<td>py2,py3,R,F#</td>
+</tr>
+<tr>
+<td>一般而言，你用GPU训练一个模型，平台提供的内存资源会相应减少一些。在<a href="https://medium.com/datadriveninvestor/comparing-gpu-and-tpu-training-performance-on-google-colaboratory-c1e54e26993f" target="_blank" rel="noopener">一些评测</a>中，google的GPU比TPU性能稍微强劲些。总体而言，Google colab更加适合较为大型的模型的训练。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="1-3-收费平台资源"><a href="#1-3-收费平台资源" class="headerlink" title="1.3 收费平台资源"></a>1.3 收费平台资源</h3><p>不同的平台有不同的收费标准，基本上可以看做是函数计算的云服务在售卖，本质上比 AI as services 底层一点，基础收费方案，大约在一个月10刀左右。</p>
+<h4 id="floydhub"><a href="#floydhub" class="headerlink" title="floydhub"></a><a href="https://www.floydhub.com/" target="_blank" rel="noopener">floydhub</a></h4><p>如下图所示，可以看到，主力方案，基本提供100G存储，使用的是NVIDIA的Tesla K80或者V100.但是需要注意这些资源都是抢占式的，运行时可以长达7天，一般能用上完整的GPU，内存在60G左右。<br><img src="https://upload-images.jianshu.io/upload_images/20467-4f5975fc281c37ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="floyhub 价格方案"></p>
+<p>####<a href="https://www.paperspace.com" target="_blank" rel="noopener">paperspace</a><br>如下图所示,paperspace使用的内核和内存方案类似于floyhub，但是有一定GPU并发，以及notebook的限制。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/20467-f03eab9ab69bfcd2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="paperspace 价格方案"></p>
+<p>当然，你还可以购买一台GPU Server 部署直接的Jupyter notebook。amazon,google,azure都有自己方案，那么价格就远贵于AI as service的供应商服务啦。</p>
+<h2 id="2-Google-Colab"><a href="#2-Google-Colab" class="headerlink" title="2.Google Colab"></a>2.Google Colab</h2><p>google colab 是以上介绍平台中，最适合个人开发者的。它不仅仅是提供切实可用的计算、存储资源，它的文件是默认存储在google drive中，也能够集成GitHub做版本控制。同时还可以安装第三方python包，读写第三方的数据源，还能很轻松分享notebook文件。</p>
+<p>打开首个google colab notebook，如下图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/20467-25d65dfaad6f3326.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="google colab"></p>
+<p>可以通过修改设置，选择你的代码运行环境，google支持py2和py3，硬件加速支持CPU、GPU、TPU。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/20467-d3f06b9b44557aee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="修改运行时"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/20467-7258f834c4b39cfc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="选择后端引擎"></p>
+<p>可以通过代码查看底层所分配的硬件资源。</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">from</span> tensorflow.python.client <span class="hljs-keyword">import</span> device_lib</span><br><span class="line">device_lib.list_local_devices()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/20467-a54e71cd67ec536a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="硬件资源"></p>
+<p>可以通过 google colab 的库，上传本地文件。文件会临时存储在content目录下。</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">from</span> google.colab <span class="hljs-keyword">import</span> files</span><br><span class="line">uploaded = files.upload()</span><br><span class="line"><span class="hljs-keyword">for</span> fn <span class="hljs-keyword">in</span> uploaded.keys():</span><br><span class="line">  print(<span class="hljs-string">'User uploaded file "&#123;name&#125;" with length &#123;length&#125; bytes'</span>.format(</span><br><span class="line">      name=fn, length=len(uploaded[fn])))</span><br><span class="line"><span class="hljs-keyword">for</span> name, data <span class="hljs-keyword">in</span> uploaded.items():</span><br><span class="line">  <span class="hljs-keyword">with</span> open(name, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">    f.write(data)</span><br><span class="line">    <span class="hljs-keyword">print</span> (<span class="hljs-string">'saved file'</span>, name)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/20467-e916a77b7f3b7f17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="上传文件"></p>
+<p>简而言之，google colab是很好的一站式机器学习平台，值得信赖、使用。google colab拥有的能力远超文章所列举，只待各位good coding~</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/ml/">-ml</a>
+                </div>
+            </div>
         </div>
         
         
@@ -268,7 +348,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Posts
+                        Entradas
                     </p>
                     <p class="title has-text-weight-normal">
                         6
@@ -278,7 +358,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Categories
+                        Categorias
                     </p>
                     <p class="title has-text-weight-normal">
                         0
@@ -288,17 +368,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Tags
+                        Etiquetas
                     </p>
                     <p class="title has-text-weight-normal">
-                        3
+                        4
                     </p>
                 </div>
             </div>
         </nav>
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://github.com/ppoffice" target="_blank">
-                Follow</a>
+                SEGUIR</a>
         </div>
         
         
@@ -385,7 +465,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Categories
+                Categorias
             </h3>
             <ul class="menu-list">
             
@@ -398,9 +478,9 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            Tag Cloud
+            Nube de etiquetas
         </h3>
-        <a href="/tags/cloud-computing/" style="font-size: 10px;">cloud computing</a> <a href="/tags/history/" style="font-size: 10px;">history</a> <a href="/tags/recommendation-system/" style="font-size: 10px;">recommendation system</a>
+        <a href="/tags/ml/" style="font-size: 10px;">-ml</a> <a href="/tags/cloud-computing/" style="font-size: 10px;">cloud computing</a> <a href="/tags/history/" style="font-size: 10px;">history</a> <a href="/tags/recommendation-system/" style="font-size: 20px;">recommendation system</a>
     </div>
 </div>
 
@@ -412,7 +492,7 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            Recent
+            Recientes
         </h3>
         
         <article class="media">
@@ -518,7 +598,7 @@
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
-            Archives
+            Archivos
         </h3>
         <ul class="menu-list">
         
@@ -542,9 +622,16 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Tags
+                Etiquetas
             </h3>
             <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ml/">
+                        <span class="tag">-ml</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/cloud-computing/">
@@ -563,7 +650,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/recommendation-system/">
                         <span class="tag">recommendation system</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -587,7 +674,7 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            Recent
+            Recientes
         </h3>
         
         <article class="media">
@@ -693,7 +780,7 @@
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
-            Archives
+            Archivos
         </h3>
         <ul class="menu-list">
         
@@ -717,9 +804,16 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Tags
+                Etiquetas
             </h3>
             <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ml/">
+                        <span class="tag">-ml</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/cloud-computing/">
@@ -738,7 +832,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/recommendation-system/">
                         <span class="tag">recommendation system</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -917,10 +1011,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Posts',
+                POSTS: 'Entradas',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categories',
-                TAGS: 'Tags',
+                CATEGORIES: 'Categorias',
+                TAGS: 'Etiquetas',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',
