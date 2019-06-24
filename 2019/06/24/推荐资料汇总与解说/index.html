@@ -1,170 +1,94 @@
 <!DOCTYPE html>
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-<title>推荐资料汇总与解说 - 林场的梦</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-
-    <meta name="description" content="最近和好几位朋友讨论推荐系统的搭建和升级，暂时没空将全部实践过的部分都写出来，但是看过的资料和论文倒是一气呵成地梳理出来，对想从零搭建一个推荐系统或者对推荐系统现有效果不满希望升级的同学来说，可能有用，也可能没用，你都已经看过。 1. 架构部分 头条首席架构师曹欢欢的分享，为了让业界了解头条的算法，比较清晰扼要，突出重点，没有讲最新的内容。但是核心都涉及到，值得反复研读。基本上绝大部分推荐系统架构">
-<meta name="keywords" content="recommendation system">
-<meta property="og:type" content="article">
-<meta property="og:title" content="推荐资料汇总与解说">
-<meta property="og:url" content="http://yoursite.com/2019/06/24/推荐资料汇总与解说/index.html">
-<meta property="og:site_name" content="林场的梦">
-<meta property="og:description" content="最近和好几位朋友讨论推荐系统的搭建和升级，暂时没空将全部实践过的部分都写出来，但是看过的资料和论文倒是一气呵成地梳理出来，对想从零搭建一个推荐系统或者对推荐系统现有效果不满希望升级的同学来说，可能有用，也可能没用，你都已经看过。 1. 架构部分 头条首席架构师曹欢欢的分享，为了让业界了解头条的算法，比较清晰扼要，突出重点，没有讲最新的内容。但是核心都涉及到，值得反复研读。基本上绝大部分推荐系统架构">
-<meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-06-24T14:10:44.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="推荐资料汇总与解说">
-<meta name="twitter:description" content="最近和好几位朋友讨论推荐系统的搭建和升级，暂时没空将全部实践过的部分都写出来，但是看过的资料和论文倒是一气呵成地梳理出来，对想从零搭建一个推荐系统或者对推荐系统现有效果不满希望升级的同学来说，可能有用，也可能没用，你都已经看过。 1. 架构部分 头条首席架构师曹欢欢的分享，为了让业界了解头条的算法，比较清晰扼要，突出重点，没有讲最新的内容。但是核心都涉及到，值得反复研读。基本上绝大部分推荐系统架构">
-<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
-
-
-
-
-
-
-
-<link rel="icon" href="/images/favicon.svg">
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
-
-
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta name="keywords" content="hexo, autumn">
+    <title>
+        林场的梦
+    </title>
+    <!-- favicon -->
     
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico">
     
-    
-    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
-    
+    <link rel="stylesheet" href="/css/style.css">
 
-    
-    
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
-    
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css">
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@1.0.0/dist/hexo-infinite-scroll.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@1.0.0/dist/hexo-infinite-scroll.min.js"></script>
+    <script>
+        infiniteScroll()
 
-    
-    
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
-
-
-    
-    
-    
-    
-
-<link rel="stylesheet" href="/css/back-to-top.css">
-
-
-    
-    
-
-    
-    
-    
-    
-
-    
-    
-<link rel="stylesheet" href="/css/progressbar.css">
-<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-
-    
-    
-    
-
-    
-    
-    
-
-
-<link rel="stylesheet" href="/css/style.css">
+        // for mobile menu
+        $(function () {
+            $('.social-button').click(function () {
+                if ($('.social-links').hasClass('hide-links')) {
+                    $('.social-links').removeClass('hide-links')
+                } else {
+                    $('.social-links').addClass('hide-links')
+                }
+            })
+        })
+    </script>
 </head>
-<body class="is-3-column">
-    <nav class="navbar navbar-main">
-    <div class="container">
-        <div class="navbar-brand is-flex-center">
-            <a class="navbar-item navbar-logo" href="/">
-            
-                <img src="/images/logo.svg" alt="推荐资料汇总与解说" height="28">
-            
-            </a>
-        </div>
-        <div class="navbar-menu">
-            
-            <div class="navbar-start">
-                
-                <a class="navbar-item" href="/">Home</a>
-                
-                <a class="navbar-item" href="/archives">Archives</a>
-                
-                <a class="navbar-item" href="/categories">Categories</a>
-                
-                <a class="navbar-item" href="/tags">Tags</a>
-                
-                <a class="navbar-item" href="/about">About</a>
-                
-            </div>
-            
-            <div class="navbar-end">
-                
-                    
-                    
-                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
-                        
-                        <i class="fab fa-github"></i>
-                        
-                    </a>
-                    
-                
-                
-                
-                <a class="navbar-item search" title="Search" href="javascript:;">
-                    <i class="fas fa-search"></i>
-                </a>
-                
-            </div>
-        </div>
-    </div>
-</nav>
-    
-    <section class="section">
+
+    <body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
         <div class="container">
-            <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+            <header class="header">
+    <h1 class="title">
+        <a href="/" class="logo">
+            林场的梦
+        </a>
+    </h1>
+    <h2 class="desc">
+        
+    </h2>
+
+    <nav class="links">
+        <button class="social-button">
+            menu
+        </button>
+        <ul class="social-links hide-links">
+            
+                <li>
+                    <a href="https://github.com/FrontendSophie">
+                        Github
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://www.linkedin.com/in/frontendsophie/">
+                        LinkedIn
+                    </a>
+                </li>
+                
+        </ul>
+    </nav>
+</header>
+                <main class="main">
+                    <article class="post">
     
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-06-24T13:56:11.000Z">2019-06-24</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    20 minutes read (About 2934 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                推荐资料汇总与解说
-            
-        </h1>
-        <div class="content">
-            <p>最近和好几位朋友讨论推荐系统的搭建和升级，暂时没空将全部实践过的部分都写出来，但是看过的资料和论文倒是一气呵成地梳理出来，对想从零搭建一个推荐系统或者对推荐系统现有效果不满希望升级的同学来说，可能有用，也可能没用，你都已经看过。</p>
+    
+    
+    <h2 class="post-title">
+        推荐资料汇总与解说
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-06-24
+        </li>
+        <li>
+            vent lam
+        </li>
+    </ul>
+    <div class="post-content">
+        <p>最近和好几位朋友讨论推荐系统的搭建和升级，暂时没空将全部实践过的部分都写出来，但是看过的资料和论文倒是一气呵成地梳理出来，对想从零搭建一个推荐系统或者对推荐系统现有效果不满希望升级的同学来说，可能有用，也可能没用，你都已经看过。</p>
 <h2 id="1-架构部分"><a href="#1-架构部分" class="headerlink" title="1. 架构部分"></a>1. 架构部分</h2><ol>
 <li><p>头条首席架构师曹欢欢的分享，为了让业界了解头条的算法，比较清晰扼要，突出重点，没有讲最新的内容。但是核心都涉及到，<strong>值得反复研读</strong>。基本上绝大部分推荐系统架构和头条一致。当中的差异主要体现在实时框架上，头条继承百度系的搜索架构思想，喜欢用倒排索引来实现很多部件。阿里、腾讯更加倾向于类似于Strom的流式计算加上KV存储的方式。个人认为并无高低之分，看架构师、负责人喜好和团队技能分布。<br><a href="https://36kr.com/p/5114077.html?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io" target="_blank" rel="noopener">36氪首发 | 今日头条推荐算法原理全文详解</a><br><a href="https://www.leiphone.com/news/201707/YYoc8r9MWsBy2QAC.html?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io" target="_blank" rel="noopener">今日头条成功的核心技术秘诀是什么？深度解密个性化资讯推荐技术
 </a></p>
@@ -229,792 +153,34 @@ FM是不错的ML模型，用深度学习来结合，得到一个更强的模型�
 <p>•    大数据的埋点非常重要，准备好最充分的数据原材料<br><a href="https://www.jianshu.com/p/d45235b51601" target="_blank" rel="noopener">https://www.jianshu.com/p/d45235b51601</a></p>
 <p>本来还有实验部分、评估部分、实战内容，但是我当时比较困了，就不想写了。</p>
 
-        </div>
-        
-        <div class="level is-size-7 is-uppercase">
-            <div class="level-start">
-                <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/recommendation-system/">recommendation system</a>
-                </div>
-            </div>
-        </div>
-        
-        
-        
     </div>
-</div>
+</article>
+                </main>
+                <aside class="aside">
+                    <section class="aside-section">
+                        
+    <h1>Categories</h1>
+
+    
+
+                    </section>
+                    <section class="aside-section">
+                        
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
 
 
+                    </section>
+                    <section class="aside-section tag">
+                        
+    <h1>Tags</h1>
 
-<div class="card">
-    <div class="card-content">
-        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
-        <div class="buttons is-centered">
-            
-                
-<div class="notification is-danger">
-    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
-</div>
+    <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ml/">-ml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cloud-computing/">cloud computing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/history/">history</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommendation-system/">recommendation system</a></li></ul>
 
-                
-                
-<div class="notification is-danger">
-    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
-</div>
-
-                
-                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
-
-<div class="notification is-danger">
-    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
-</div>
-
-                
-                
-<div class="notification is-danger">
-    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
-</div>
-
-                
+                    </section>
+                </aside>
         </div>
-    </div>
-</div>
+    </body>
 
-
-
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/06/24/一站式机器学习平台资源介绍/">
-                <span class="level-item">一站式机器学习平台资源介绍</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
-    </div>
-</div>
-
-
-</div>
-                
-
-
-
-
-<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <nav class="level">
-            <div class="level-item has-text-centered">
-                <div>
-                    
-                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="Your name">
-                    
-                    
-                    <p class="is-size-4 is-block">
-                        Your name
-                    </p>
-                    
-                    
-                    <p class="is-size-6 is-block">
-                        Your title
-                    </p>
-                    
-                    
-                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
-                        <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>Your location</span>
-                    </p>
-                    
-                </div>
-            </div>
-        </nav>
-        <nav class="level is-mobile">
-            <div class="level-item has-text-centered is-marginless">
-                <div>
-                    <p class="heading">
-                        Entradas
-                    </p>
-                    <p class="title has-text-weight-normal">
-                        6
-                    </p>
-                </div>
-            </div>
-            <div class="level-item has-text-centered is-marginless">
-                <div>
-                    <p class="heading">
-                        Categorias
-                    </p>
-                    <p class="title has-text-weight-normal">
-                        0
-                    </p>
-                </div>
-            </div>
-            <div class="level-item has-text-centered is-marginless">
-                <div>
-                    <p class="heading">
-                        Etiquetas
-                    </p>
-                    <p class="title has-text-weight-normal">
-                        4
-                    </p>
-                </div>
-            </div>
-        </nav>
-        <div class="level">
-            <a class="level-item button is-link is-rounded" href="https://github.com/ppoffice" target="_blank">
-                SEGUIR</a>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/ppoffice">
-                
-                <i class="fab fa-github"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="Facebook" href="https://facebook.com">
-                
-                <i class="fab fa-facebook"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="Twitter" href="https://twitter.com">
-                
-                <i class="fab fa-twitter"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="Dribbble" href="https://dribbble.com">
-                
-                <i class="fab fa-dribbble"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
-                
-                <i class="fas fa-rss"></i>
-                
-            </a>
-            
-        </div>
-        
-    </div>
-</div>
-    
-        
-    
-        
-
-<div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-        <h3 class="menu-label">
-            Links
-        </h3>
-        <ul class="menu-list">
-        
-            <li>
-                <a class="level is-mobile" href="https://hexo.io" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">Hexo</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">hexo.io</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://github.com/ppoffice" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">PPOffice</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">github.com</span>
-                    </span>
-                </a>
-            </li>
-        
-        </ul>
-        </div>
-    </div>
-</div>
-
-
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                Categorias
-            </h3>
-            <ul class="menu-list">
-            
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            Nube de etiquetas
-        </h3>
-        <a href="/tags/ml/" style="font-size: 10px;">-ml</a> <a href="/tags/cloud-computing/" style="font-size: 10px;">cloud computing</a> <a href="/tags/history/" style="font-size: 10px;">history</a> <a href="/tags/recommendation-system/" style="font-size: 20px;">recommendation system</a>
-    </div>
-</div>
-
-    
-    
-        <div class="column-right-shadow is-hidden-widescreen ">
-        
-            
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            Recientes
-        </h3>
-        
-        <article class="media">
-            
-            <a href="/2019/06/24/推荐资料汇总与解说/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="推荐资料汇总与解说">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-06-24T13:56:11.000Z">2019-06-24</time></div>
-                    <a href="/2019/06/24/推荐资料汇总与解说/" class="has-link-black-ter is-size-6">推荐资料汇总与解说</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/06/24/一站式机器学习平台资源介绍/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="一站式机器学习平台资源介绍">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-06-24T13:45:23.000Z">2019-06-24</time></div>
-                    <a href="/2019/06/24/一站式机器学习平台资源介绍/" class="has-link-black-ter is-size-6">一站式机器学习平台资源介绍</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/06/24/DeepFM理论与其应用/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="DeepFM理论与其应用">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-06-24T13:41:14.000Z">2019-06-24</time></div>
-                    <a href="/2019/06/24/DeepFM理论与其应用/" class="has-link-black-ter is-size-6">DeepFM理论与其应用</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/06/22/胡椒全球史读书笔记/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="胡椒全球史读书笔记">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-06-22T09:04:51.000Z">2019-06-22</time></div>
-                    <a href="/2019/06/22/胡椒全球史读书笔记/" class="has-link-black-ter is-size-6">胡椒全球史读书笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/06/22/我眼中的云计算/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="我眼中的云计算">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-06-22T07:44:28.000Z">2019-06-22</time></div>
-                    <a href="/2019/06/22/我眼中的云计算/" class="has-link-black-ter is-size-6">我眼中的云计算</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-    </div>
-</div>
-
-        
-            <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-        <h3 class="menu-label">
-            Archivos
-        </h3>
-        <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2019/06/">
-                <span class="level-start">
-                    <span class="level-item">June 2019</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">6</span>
-                </span>
-            </a>
-        </li>
-        
-        </ul>
-        </div>
-    </div>
-</div>
-        
-            <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                Etiquetas
-            </h3>
-            <div class="field is-grouped is-grouped-multiline">
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/ml/">
-                        <span class="tag">-ml</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/cloud-computing/">
-                        <span class="tag">cloud computing</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/history/">
-                        <span class="tag">history</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/recommendation-system/">
-                        <span class="tag">recommendation system</span>
-                        <span class="tag is-grey">2</span>
-                    </a>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-</div>
-        
-        </div>
-    
-</div>
-
-                
-
-
-
-
-<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            Recientes
-        </h3>
-        
-        <article class="media">
-            
-            <a href="/2019/06/24/推荐资料汇总与解说/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="推荐资料汇总与解说">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-06-24T13:56:11.000Z">2019-06-24</time></div>
-                    <a href="/2019/06/24/推荐资料汇总与解说/" class="has-link-black-ter is-size-6">推荐资料汇总与解说</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/06/24/一站式机器学习平台资源介绍/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="一站式机器学习平台资源介绍">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-06-24T13:45:23.000Z">2019-06-24</time></div>
-                    <a href="/2019/06/24/一站式机器学习平台资源介绍/" class="has-link-black-ter is-size-6">一站式机器学习平台资源介绍</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/06/24/DeepFM理论与其应用/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="DeepFM理论与其应用">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-06-24T13:41:14.000Z">2019-06-24</time></div>
-                    <a href="/2019/06/24/DeepFM理论与其应用/" class="has-link-black-ter is-size-6">DeepFM理论与其应用</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/06/22/胡椒全球史读书笔记/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="胡椒全球史读书笔记">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-06-22T09:04:51.000Z">2019-06-22</time></div>
-                    <a href="/2019/06/22/胡椒全球史读书笔记/" class="has-link-black-ter is-size-6">胡椒全球史读书笔记</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/06/22/我眼中的云计算/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="我眼中的云计算">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-06-22T07:44:28.000Z">2019-06-22</time></div>
-                    <a href="/2019/06/22/我眼中的云计算/" class="has-link-black-ter is-size-6">我眼中的云计算</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-    </div>
-</div>
-
-    
-        <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-        <h3 class="menu-label">
-            Archivos
-        </h3>
-        <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2019/06/">
-                <span class="level-start">
-                    <span class="level-item">June 2019</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">6</span>
-                </span>
-            </a>
-        </li>
-        
-        </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                Etiquetas
-            </h3>
-            <div class="field is-grouped is-grouped-multiline">
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/ml/">
-                        <span class="tag">-ml</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/cloud-computing/">
-                        <span class="tag">cloud computing</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/history/">
-                        <span class="tag">history</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/recommendation-system/">
-                        <span class="tag">recommendation system</span>
-                        <span class="tag is-grey">2</span>
-                    </a>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-</div>
-    
-    
-</div>
-
-            </div>
-        </div>
-    </section>
-    <footer class="footer">
-    <div class="container">
-        <div class="level">
-            <div class="level-start has-text-centered-mobile">
-                <a class="footer-logo is-block has-mb-6" href="/">
-                
-                    <img src="/images/logo.svg" alt="推荐资料汇总与解说" height="28">
-                
-                </a>
-                <p class="is-size-7">
-                &copy; 2019 vent lam&nbsp;
-                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
-                
-                </p>
-            </div>
-            <div class="level-end">
-            
-                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
-                
-                
-                <p class="control">
-                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
-                        
-                        <i class="fab fa-creative-commons"></i>
-                        
-                    </a>
-                </p>
-                
-                <p class="control">
-                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
-                        
-                        <i class="fab fa-creative-commons-by"></i>
-                        
-                    </a>
-                </p>
-                
-                <p class="control">
-                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
-                        
-                        <i class="fab fa-github"></i>
-                        
-                    </a>
-                </p>
-                
-                </div>
-            
-            </div>
-        </div>
-    </div>
-</footer>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
-<script>moment.locale("en");</script>
-
-
-    
-    
-    
-    <script src="/js/animation.js"></script>
-    
-
-    
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
-    <script src="/js/gallery.js" defer></script>
-    
-
-    
-    
-
-<div id="outdated">
-    <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
-            my browser now </a></p>
-    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        outdatedBrowser({
-            bgColor: '#f25648',
-            color: '#ffffff',
-            lowerThan: 'flex'
-        });
-    });
-</script>
-
-
-    
-    
-<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    MathJax.Hub.Config({
-        'HTML-CSS': {
-            matchFontHeight: false
-        },
-        SVG: {
-            matchFontHeight: false
-        },
-        CommonHTML: {
-            matchFontHeight: false
-        },
-        tex2jax: {
-            inlineMath: [
-                ['$','$'],
-                ['\\(','\\)']
-            ]
-        }
-    });
-});
-</script>
-
-    
-    
-
-<a id="back-to-top" title="Back to Top" href="javascript:;">
-    <i class="fas fa-chevron-up"></i>
-</a>
-<script src="/js/back-to-top.js" defer></script>
-
-
-    
-    
-
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
-    <script src="/js/clipboard.js" defer></script>
-    
-
-    
-    
-    
-
-
-<script src="/js/main.js" defer></script>
-
-    
-    <div class="searchbox ins-search">
-    <div class="searchbox-container ins-search-container">
-        <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
-            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="searchbox-result-wrapper ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-    (function (window) {
-        var INSIGHT_CONFIG = {
-            TRANSLATION: {
-                POSTS: 'Entradas',
-                PAGES: 'Pages',
-                CATEGORIES: 'Categorias',
-                TAGS: 'Etiquetas',
-                UNTITLED: '(Untitled)',
-            },
-            CONTENT_URL: '/content.json',
-        };
-        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-    })(window);
-</script>
-<script src="/js/insight.js" defer></script>
-<link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css">
-    
-</body>
 </html>
