@@ -8,14 +8,27 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>糖豆实时推荐系统设计与实现 | 林场的梦</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="1.实时推荐系统与相关工作###1.1 原因实时计算能够及时捕获用户短时兴趣，同时能够快速反馈分发当前系统的用户兴趣内容。大量实践以及发表的文章都显示了推荐系统实时化，对推荐精准度的提升的有效性和必要性。 1.2 腾讯架构与实现实时推荐相关工作非常多，腾讯和北大合作的两篇SIGMOD文章是比较实际和详细的实现，采用的计算框架能够支持大规模数据的实时推荐，以下将会分开简述以下两篇文章。 ####20">
+<meta name="keywords" content="recommendation system">
+<meta property="og:type" content="article">
 <meta property="og:title" content="糖豆实时推荐系统设计与实现">
 <meta property="og:url" content="http://yoursite.com/2019/06/24/糖豆实时推荐系统设计与实现/index.html">
 <meta property="og:site_name" content="林场的梦">
+<meta property="og:description" content="1.实时推荐系统与相关工作###1.1 原因实时计算能够及时捕获用户短时兴趣，同时能够快速反馈分发当前系统的用户兴趣内容。大量实践以及发表的文章都显示了推荐系统实时化，对推荐精准度的提升的有效性和必要性。 1.2 腾讯架构与实现实时推荐相关工作非常多，腾讯和北大合作的两篇SIGMOD文章是比较实际和详细的实现，采用的计算框架能够支持大规模数据的实时推荐，以下将会分开简述以下两篇文章。 ####20">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-24T14:27:20.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/20467-b5bee96bdb968c10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/20467-b783a98e4a094361.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/20467-c913a1b5bafe6a3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/20467-a81945bcf6b4f4f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/20467-ffc836b868f9de45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/20467-22dfa6355957facd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://gitlab.tangdou.com/data/doc/raw/master/recy/img/realtime.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/20467-527ed03f8c6933aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-06-24T14:33:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="糖豆实时推荐系统设计与实现">
+<meta name="twitter:description" content="1.实时推荐系统与相关工作###1.1 原因实时计算能够及时捕获用户短时兴趣，同时能够快速反馈分发当前系统的用户兴趣内容。大量实践以及发表的文章都显示了推荐系统实时化，对推荐精准度的提升的有效性和必要性。 1.2 腾讯架构与实现实时推荐相关工作非常多，腾讯和北大合作的两篇SIGMOD文章是比较实际和详细的实现，采用的计算框架能够支持大规模数据的实时推荐，以下将会分开简述以下两篇文章。 ####20">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/20467-b5bee96bdb968c10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="林场的梦" type="application/atom+xml">
   
@@ -171,7 +184,52 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="1-实时推荐系统与相关工作"><a href="#1-实时推荐系统与相关工作" class="headerlink" title="1.实时推荐系统与相关工作"></a>1.实时推荐系统与相关工作</h2><p>###1.1 原因<br>实时计算能够及时捕获用户短时兴趣，同时能够快速反馈分发当前系统的用户兴趣内容。大量实践以及发表的文章都显示了推荐系统实时化，对推荐精准度的提升的有效性和必要性。</p>
+<h3 id="1-2-腾讯架构与实现"><a href="#1-2-腾讯架构与实现" class="headerlink" title="1.2 腾讯架构与实现"></a>1.2 腾讯架构与实现</h3><p>实时推荐相关工作非常多，腾讯和北大合作的两篇SIGMOD文章是比较实际和详细的实现，采用的计算框架能够支持大规模数据的实时推荐，以下将会分开简述以下两篇文章。</p>
+<p>####2015年<br>Huang发表了基于Storm和KV存储的大规模实时推荐系统 (TencentRec: Real-time Stream Recommendation in Practice)</p>
+<ol>
+<li>实现了一系列经典推荐算法的实时版本</li>
+<li>实现了数种实时算法提高推荐精度</li>
+<li>广泛应用于业务有效提高</li>
+</ol>
+<p>腾讯采用使用storm原因，支持实时数据流式计算，良好的可扩展性、可容错性，采用简单编程模型。<br>文章核心包括实时增量计算的ItemCF，以及用户隐式反馈计算、实时剪枝算法、基于用户画像的数据稀疏性策略。应用在多个业务上都有不同程度的提升，最明显的是腾讯视频的全局表现提升高达30%。</p>
+<p>全文核心应该是下图六道公式，阐述腾讯如何具体实现的增量itemcf。</p>
+<p>文章中的co-rating,其实就是我们常说的user  bias. 公式3和4解决了用户隐式反馈问题，细节的计算可以参考2016的文章，实际是一个log函数融合了用户的浏览、点击、分享、购买等行为，转化成rating.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/20467-b5bee96bdb968c10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="corating.png"></p>
+<p>请注意公式4，由于他们定义了corating，实际是将相似度的增量计算从L2范数的计算转化成了L1范数计算.(当Rup取x的时候，y=1/x)。</p>
+<p>可扩展的增量计算<br><img src="http://upload-images.jianshu.io/upload_images/20467-b783a98e4a094361.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="itemcf.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/20467-c913a1b5bafe6a3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="initemcf.png"></p>
+<p>####2016年<br>腾讯视频的推荐应用(Real-time Video Recommendation Exploration)</p>
+<ol>
+<li>实时处理、大规模数据下的准确率和可扩展性。</li>
+<li>开发了一个基于矩阵分解的大规模在线协同过滤算法，以及一系列的自适应更新策略。</li>
+<li>通过增加包括视频类别、时间因素影响、用户画像剪枝以及训练等方法，提高实时TopN推荐的精度。</li>
+</ol>
+<p>在我们看来，全文核心在于实时计算的数据流转，如下图所示：<br><img src="http://upload-images.jianshu.io/upload_images/20467-a81945bcf6b4f4f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="tecvideo.png"></p>
+<p>基于storm的实时计算topology图:<br><img src="http://upload-images.jianshu.io/upload_images/20467-ffc836b868f9de45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="topo.png"></p>
+<h2 id="2-糖豆的设计与实现"><a href="#2-糖豆的设计与实现" class="headerlink" title="2. 糖豆的设计与实现"></a>2. 糖豆的设计与实现</h2><h3 id="2-1-架构"><a href="#2-1-架构" class="headerlink" title="2.1 架构"></a>2.1 架构</h3><p>糖豆整体推荐框架，从离线，近线，在线三套计算流程组合而成。在线流程基于Spark Streaming框架实现，部署在近线集群。 在线推荐框架实时根据用户行为，生成实时推荐列表，从而满足用户瞬时兴趣，提高推荐系统的推荐新鲜度。简单架构图如下:<br><img src="http://upload-images.jianshu.io/upload_images/20467-22dfa6355957facd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="糖豆实时架构.png"></p>
+<h3 id="2-2-基于Spark-Streaming的实现"><a href="#2-2-基于Spark-Streaming的实现" class="headerlink" title="2.2 基于Spark Streaming的实现"></a>2.2 基于Spark Streaming的实现</h3><p>####2.2.1. 计算流程<br>实时计算流程如下图所示:</p>
+<p><img src="http://gitlab.tangdou.com/data/doc/raw/master/recy/img/realtime.png" alt="实时计算流程图"><br>分解步骤：</p>
+<ol>
+<li>Spark Streaming 读取Kafka，原始日志ETL</li>
+<li>提取用户隐式反馈，生成候选集tuple (uid,vid)</li>
+<li>每天凌晨会将离线计算好的ItemCF模型结果集导入Redis。itemcf数据结构是一个similarity vid list。</li>
+<li>实时维护看过视频set,对看过视频的处理候选集tuple过滤该用户看过的视频</li>
+<li>实时更新推荐过视频set,候选集tuple过滤当天已经被推荐过的视频</li>
+<li>候选集写入Redis推荐list</li>
+</ol>
+<p>python实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="keyword">print</span> sys.argv</span><br><span class="line">    reload(sys)</span><br><span class="line">    sys.setdefaultencoding(<span class="string">'utf-8'</span>)</span><br><span class="line">    sc = SparkContext(appName=<span class="string">"real_time_etl"</span>)</span><br><span class="line">    <span class="comment">#20秒</span></span><br><span class="line">    ssc = StreamingContext(sc, <span class="number">15</span>)</span><br><span class="line">    brokers = <span class="string">"kafka-servers:9092"</span></span><br><span class="line">    topic = <span class="string">"logstash"</span></span><br><span class="line">    <span class="comment">#读取kafka</span></span><br><span class="line">    kvs = KafkaUtils.createDirectStream(ssc, [topic], &#123;<span class="string">"metadata.broker.list"</span>: brokers&#125;)</span><br><span class="line">   <span class="comment">#解析日志、过滤无关数据、读取相似视频</span></span><br><span class="line">    lines = kvs.map(<span class="keyword">lambda</span> x : readJson(x[<span class="number">1</span>])).filter(<span class="keyword">lambda</span> x: x <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>).map(<span class="keyword">lambda</span> x: getTopkfromRedis(x))</span><br><span class="line">    <span class="comment">#lines.pprint()</span></span><br><span class="line">     <span class="comment">#写入推荐结果</span></span><br><span class="line">    lines.foreachRDD(<span class="keyword">lambda</span> rdd: list2Redis(rdd))  </span><br><span class="line">    ssc.start()</span><br><span class="line">    ssc.awaitTermination()</span><br></pre></td></tr></table></figure>
+
+<p>####2.2.2 监控<br>部署在集群Master节点的监控脚本会每30s扫描一次实时计算代码进程，如果发现进程被failed，会自动拉起实时计算Spark Steaming进程。如果进程拉起失败会触发邮件、短信报警<br>  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line"></span><br><span class="line">MOBILE=<span class="string">"your phone numbers"</span></span><br><span class="line">RT_HOME=/home/realtime/recommend.py</span><br><span class="line"></span><br><span class="line">DIR=/data/rtdamon</span><br><span class="line">PID_FILE=<span class="variable">$DIR</span>/.run/rt-litetl-damon.pid</span><br><span class="line">LOG_FILE=<span class="variable">$DIR</span>/.<span class="built_in">log</span>/rt-litetl-damon.log</span><br><span class="line">t=$(date -d <span class="string">"today"</span> +<span class="string">"%Y-%m-%d %H:%M:%S"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /etc/profile </span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$PID_FILE</span> <span class="variable">$LOG_FILE</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -e <span class="string">"<span class="variable">$PID_FILE</span>"</span> ];</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">        pid=`cat <span class="variable">$PID_FILE</span>`</span><br><span class="line">        <span class="built_in">echo</span> <span class="variable">$pid</span></span><br><span class="line">        damon_process_exists=`ps v -p <span class="variable">$pid</span> | grep <span class="string">"rt-litetl-damon.sh"</span> | grep -v grep|grep -v \&lt;defunct\&gt; `</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"damon process exists : <span class="variable">$process_exists</span>"</span></span><br><span class="line">        <span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$damon_process_exists</span>"</span> ]</span><br><span class="line">        <span class="keyword">then</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">"Process rt-litetl-damon.sh is running! <span class="variable">$t</span>"</span> &gt;&gt; <span class="variable">$LOG_FILE</span></span><br><span class="line">                <span class="built_in">exit</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">pid=$$</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$pid</span>"</span> &gt; <span class="variable">$PID_FILE</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> :</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">        process_exists=`ps -ef|grep <span class="string">"<span class="variable">$RT_HOME</span>"</span>|grep <span class="string">"spark"</span>|grep -v grep|wc -l`</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"process exists : <span class="variable">$process_exists</span>"</span> &gt;&gt;<span class="variable">$LOG_FILE</span></span><br><span class="line">        <span class="keyword">if</span> [ <span class="string">"<span class="variable">$process_exists</span>"</span> == <span class="string">"0"</span> ]; <span class="keyword">then</span></span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">/hadoop/spark/bin/spark-submit  --master yarn --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.1.0 --py-files /hadoop/user/rt/redis.zip --num-executors 10 --executor-cores 7 --executor-memory 6g /home/realtime/recommend.py&gt;&gt;/data/rtlog/rtrecommed.log  2&gt;&amp;1 &amp;</span><br><span class="line">	/usr/bin/php -f /data/rtdamon/yunsms.class.php <span class="string">"<span class="variable">$MOBILE</span>"</span> <span class="string">"recommend.py"</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">"realtime recommendation process already restarted at <span class="variable">$t</span>"</span> &gt;&gt; <span class="variable">$LOG_FILE</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#sleep `expr 3600 \* 3`</span></span><br><span class="line">        sleep `expr 60 \* 1`</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="2-3-收益"><a href="#2-3-收益" class="headerlink" title="2.3 收益"></a>2.3 收益</h3><p>根据我们的AB测试数据来看，整体CTR提升25%。用推荐系统的A版对比无推荐的B版，用户观看时长提升47%。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/20467-527ed03f8c6933aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="recabdata.png"></p>
+<h3 id="3-问题与改进"><a href="#3-问题与改进" class="headerlink" title="3.  问题与改进"></a>3.  问题与改进</h3><ol>
+<li>较多代码逻辑集中在Redis。目前Redis无灾备措施，同时IO和负载也会出现Peak。</li>
+<li>Spark Streaming 目前实时级别在分钟级。需要升级成storm的秒、毫秒级别。</li>
+<li>需要用户点击等行为才会生产数据，容易召回不足。</li>
+</ol>
+
       
 
       
@@ -200,6 +258,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">recommendation system</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -392,11 +461,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">-ml</a>
+                <a href="javascript:void(0)" class="js-tag color2">recommendation system</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">recommendation system</a>
+                <a href="javascript:void(0)" class="js-tag color4">-ml</a>
               </li>
              
               <li class="article-tag-list-item">
