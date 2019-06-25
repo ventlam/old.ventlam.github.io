@@ -84,13 +84,135 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="1-缘起"><a href="#1-缘起" class="headerlink" title="1.缘起"></a>1.缘起</h2><p>糖豆作为国内最大的广场舞平台，全网的MAU已经超过4000万，每月PGC和UCG生产的视频个数已经超过15万个，每月用户观看的视频也超过100万个。然而之前糖豆APP首页主要还是依赖内容编辑手工推荐来发现内容，每天的推荐量也是几十个而已。明显可见千人一面的内容分发效率比较低下，继而我们于2016年12月初，启动了糖豆推荐系统的设计以及开发，目前截止到2017年1月初，已经完成第一期推荐系统的开发与评估。推荐项目立项伊始，我撰写了一篇整体架构与设计，本文和架构一文在部分内容有所重复，本文主要专注阐述推荐系统的开发、实现以及评估的细节。</p>
+<p>推荐系统的目的也可以简单总结成为以下两点：</p>
+<ul>
+<li>根据用户个人兴趣分发内容，为生产者和消费者打造更加合理的流量分发体系。</li>
+<li>提高用户观看时长，从而进一步到达提升产品留存。</li>
+</ul>
+<p>可以看到核心评估目标是用户的观看时长，相对直接易理解。当然评估过程，我们遵循数据科学的评估体系，衡量了包括多种优化目标(RMSE,P@K,AUC/ROC,覆盖率等等)的指标。同时还根据AB测试，评估了整体推荐模块的CTR,播放时长等多项业务统计指标。</p>
+<h2 id="2-架构"><a href="#2-架构" class="headerlink" title="2.架构"></a>2.架构</h2><p>相信自从Netfix公布他们的推荐架构之后[1]，后续的推荐系统基本都会按照在线(online),近线(near line),离线(off line)三个部分来构建。虽然划分成三个模块，本质是推荐算法迭代时间窗口问题，根据用户行为数据，构建一个持续进化的系统。</p>
+<p>糖豆推荐系统架构基本也是按照三个模块来构建。限于人力和时间，第一期主要实现了离线部分。架构图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/20467-44cc02855ae14481.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="推荐系统架构1.0"></p>
+<p>整个系统架构主要由数据、算法、策略、评估和服务层组成，相对清晰明了。</p>
+<ol>
+<li>数据层，主要数据来源包括用户行为日志以及数据库。我们在16年10月份~11月份，对整个日志收容、分析和挖掘流程做了改造。<ul>
+<li>收容：同时将日志离线和在线的pipeline彻底分离。</li>
+<li>解析：原本基于MR的ETL全部改为Spark任务，在集群机器数量不变情况下，整体效率基本提高了两倍以上，Spark具备很好的取代MR的潜力。</li>
+<li>挖掘：Spark MLib集成了多种机器学习算法，原有基于Mahout的算法基本可以替代实现。</li>
+</ul>
+</li>
+<li>算法层架构一图中，黑字部分是我们实现了的算法，蓝字部分都是计划中但未实现的算法。</li>
+<li>策略层：<ul>
+<li>融合算法，主要包括以下三种，目前我们同时使用了级联联合以及混合融合。</li>
+<li>业务过滤，目前暂时没做。</li>
+<li>推荐排序，目前的排序对用户隐式反馈行为(包括播放时长、下载、收藏等指标)做线性加权以及归一化处理，得到一个0~5分之间的评分，作为LFM的数据集，通过模型得到预测的打分，最后按照视频打分以及视频创建时间做倒序排序。后续我们会引入学习排序(LTR)算法，来持续改进推荐结果排序质量。LTR，包括PointWise,PairWise,ListWise三类算法。预期未来先使用PointWise类别的算法。</li>
+</ul>
+</li>
+</ol>
+<h2 id="3-算法实现"><a href="#3-算法实现" class="headerlink" title="3.算法实现"></a>3.算法实现</h2><p>推荐系统算法在过去几十年有非常长足的发展和应用，总结下来基本包括基于内容、基于邻域，基于矩阵分解等类型。</p>
+<ol>
+<li>基于邻域：核心思想是，为用户推荐与之属性、行为相似的物品。邻域就是兴趣相似的数学表达。它包括UserCF和ItemCF，基础研究深入，在性能、可解释性上效果都不错，所以应用也十分广泛。</li>
+<li>基于矩阵分解：也就是隐语义模型，在文本挖掘范围首先被提出。矩阵分解是一系列复杂算法(LSM,LSI,LDA,Topic Model)的数学基础。它包括特征值分解、奇异值分解等，有具体计算方法包括SVD,Funk-SVD,ALS,SVD++等。</li>
+</ol>
+<h3 id="3-1-LFM"><a href="#3-1-LFM" class="headerlink" title="3.1 LFM"></a>3.1 LFM</h3><p> 隐语义模型其核心思想是通过潜在特征联系用户和物品,根据用户行为统计的自动聚类。LFM模型能够划分出多维度、软性、不同权重的分类。它通过以下数学公式来表达用户对物品的兴趣，由两个低秩的矩阵来近似表达原有高阶矩阵。</p>
+<p> <img src="http://upload-images.jianshu.io/upload_images/20467-f7af8324276d0a17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="矩阵分解"></p>
+<p>可以看到从矩阵计算问题，转化成优化问题。优化目标的数学形式化：</p>
+<p> <img src="http://upload-images.jianshu.io/upload_images/20467-b4898e9bb730b901.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="优化形式化"></p>
+<p>这个形式化问题有多种解法，包括SVD,ALS等。Spark提供了包括mlib里的ALS，以及graphx里的SVD++。</p>
+<h4 id="3-1-1-ALS-最小交替二乘法"><a href="#3-1-1-ALS-最小交替二乘法" class="headerlink" title="3.1.1 ALS(最小交替二乘法)"></a>3.1.1 ALS(最小交替二乘法)</h4><p>ALS将矩阵计算转化成为一个最优化函数问题,通过最小化误差的平方和计算最佳函数匹配。ALS在每次迭代期间，一个因子矩阵保持恒定，而另一个使用最小二乘法求解。同样在求解另一因子矩阵，保持新求解的因子矩阵固定不变。</p>
+<p>Spark ALS的实现，每次迭代过程了为了减少通讯消耗，只会传输两个因子矩阵(用户、物品)之一参与计算。这个实现是通过预计算矩阵的元数据，得到一个meta矩阵。这样就可以在用户和物品block之间只传输一组特征向量，来更新计算。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/20467-a96a4fffa564ed41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ALS"></p>
+<ul>
+<li>优点，不受到用户和数据质量影响。全局性求解，单一模型效果最好。</li>
+<li>缺点，增量更新缓慢。</li>
+</ul>
+<h4 id="3-1-2-Spark实现"><a href="#3-1-2-Spark实现" class="headerlink" title="3.1.2 Spark实现"></a>3.1.2 Spark实现</h4><p>spark mlib实现了ALS算法，调用比较简单，稍微麻烦的是调参和评估。贴段python代码，注释比较详细了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##初始化sparksession(spark 2.0以上引入)</span></span><br><span class="line">spark = SparkSession.builder.master(<span class="string">'yarn-client'</span>).appName(<span class="string">'recy_als_model:'</span>+inUVMDate).config(<span class="string">'spark.sql.warehouse.dir'</span>, <span class="string">'/user/hive/warehouse'</span>).enableHiveSupport().getOrCreate()</span><br><span class="line"><span class="comment">#读入用户视频评分全量表</span></span><br><span class="line">rateSql =  <span class="string">"select * from da.recy_als_data_uvm where dt='"</span>+inUVMDate+<span class="string">"'"</span></span><br><span class="line"><span class="comment">#spark 读hive表</span></span><br><span class="line">rating = spark.sql(rateSql)</span><br><span class="line"><span class="comment">#分割训练集和测试集,0.8,0.2</span></span><br><span class="line">(training, test) = rating.randomSplit([<span class="number">0.8</span>, <span class="number">0.2</span>])</span><br><span class="line"><span class="comment">#ALS模型参数</span></span><br><span class="line">ranks = [<span class="number">8</span>, <span class="number">10</span>]</span><br><span class="line">lambdas = [<span class="number">0.01</span>,<span class="number">0.05</span>, <span class="number">0.1</span>]</span><br><span class="line">numIters = [<span class="number">20</span>]</span><br><span class="line">bestModel = <span class="literal">None</span></span><br><span class="line">bestValidationRmse = float(<span class="string">"inf"</span>)</span><br><span class="line">bestRank = <span class="number">0</span></span><br><span class="line">bestLambda = <span class="number">-1.0</span></span><br><span class="line">bestNumIter = <span class="number">-1</span></span><br><span class="line"><span class="comment">#调参</span></span><br><span class="line"><span class="keyword">for</span> rank, lmbda, numIter <span class="keyword">in</span> itertools.product(ranks, lambdas, numIters):</span><br><span class="line">    als = ALS(rank=rank,maxIter=numIter, regParam=lmbda, userCol=<span class="string">"f_diu"</span>, itemCol=<span class="string">"f_vid"</span>, ratingCol=<span class="string">"f_rating"</span>, nonnegative=<span class="literal">True</span>)</span><br><span class="line">    model = als.fit(training)</span><br><span class="line">    <span class="comment">#!!注意是随机取样，使用测试集评估模型，通过RMSE来评估模型。由于测试集中可能有模型中没出现过的user,那就会有预测值为nan。drop即可</span></span><br><span class="line">    predictions = model.transform(test).dropna(<span class="string">'any'</span>)</span><br><span class="line">    evaluator = RegressionEvaluator(metricName=<span class="string">"rmse"</span>, labelCol=<span class="string">"f_rating"</span>,</span><br><span class="line">                                    predictionCol=<span class="string">"prediction"</span>)</span><br><span class="line">    validationRmse = evaluator.evaluate(predictions)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"RMSE (validation) = %f for the model trained with "</span> % validationRmse + \</span><br><span class="line">          <span class="string">"rank = %d, lambda = %.1f, and numIter = %d."</span> % (rank, lmbda, numIter)</span><br><span class="line">    <span class="keyword">if</span> (validationRmse &lt; bestValidationRmse):</span><br><span class="line">        bestModel = model</span><br><span class="line">        bestValidationRmse = validationRmse</span><br><span class="line">        bestRank = rank</span><br><span class="line">        bestLambda = lmbda</span><br><span class="line">        bestNumIter = numIter</span><br><span class="line"><span class="comment"># evaluate the best model on the test set</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"The best model was trained with rank = %d and lambda = %.1f, "</span> % (bestRank, bestLambda) \</span><br><span class="line">  + <span class="string">"and numIter = %d, and its RMSE on the test set is %f."</span> % (bestNumIter, bestValidationRmse)</span><br><span class="line"><span class="comment">#保存预测结果</span></span><br><span class="line">predictions = bestModel.transform(rating).dropna(<span class="string">'any'</span>)</span><br><span class="line">predictPath =  <span class="string">"hdfs://Ucluster/olap/da/recy_als_predict/"</span>+inUVMDate+<span class="string">"/"</span></span><br><span class="line">predictions.repartition(<span class="number">200</span>).write.mode(<span class="string">'overwrite'</span>).save(predictPath, format=<span class="string">"parquet"</span>)</span><br><span class="line"></span><br><span class="line">spark.stop()</span><br></pre></td></tr></table></figure>
+
+<p>spark ml库在逐步取代mlib库，我们使用了ml，上面代码片段需要引入pyspark.ml相关的类。</p>
+<h4 id="3-1-3-候选集问题"><a href="#3-1-3-候选集问题" class="headerlink" title="3.1.3 候选集问题"></a>3.1.3 候选集问题</h4><p>我们训练模型数据量基本在10亿量级，我们计算集群总共16台8核，24G的datanode，训练时间大概30分钟。按照我们用户和物品规模，如果直接使用模型预测推荐结果，候选集规模在<strong>万亿</strong>级别，是集群无法承受的。所有需要对预测的候选集做过滤，目前采用三种过滤方法。</p>
+<ol>
+<li>看过的作者。将用户过去30天看过的作者的作品作为候选集。这个做法合理清晰，但是存在所谓的“信息茧房”问题，也就是说容易出现多样性不足。</li>
+<li>看过的相似的视频。根据ItemCF算法得到相似的视频。将过去看过30天的Top10的类似视频当作候选集。</li>
+<li>看过的相似的标签的视频。将用户看过的视频相同类型标签的视频作为候选集。依赖专家知识，在具体到我们的舞蹈视频上，我们编辑提供的标签只能覆盖极少的视频。由于这种做法倾向于PGC作者，在测试后期不再使用。</li>
+</ol>
+<h3 id="3-2-ItemCF-基于物品的协同过滤"><a href="#3-2-ItemCF-基于物品的协同过滤" class="headerlink" title="3.2 ItemCF(基于物品的协同过滤)"></a>3.2 ItemCF(基于物品的协同过滤)</h3><p>基于物品的协同过滤算法是目前应用最广泛的推荐算法，由亚马逊提出[2]，核心思想给用户推荐那些和他们之前喜欢物品相似的物品。相似度是基于用户对物品的行为来计算的，而非物品本身的属性。</p>
+<h4 id="3-2-1-算法原理"><a href="#3-2-1-算法原理" class="headerlink" title="3.2.1 算法原理"></a>3.2.1 算法原理</h4><p>基于物品的协同过滤算法主要分为以下两步：</p>
+<ol>
+<li>计算物品之间的相似度</li>
+<li>根据物品的相似度和用户历史行为给用户生成推荐列表</li>
+</ol>
+<p><strong>核心是计算物品之间的相似度，我们使用余弦相似度。</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/20467-119439396cd1167c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="余弦相似度"></p>
+<p>该算法惩罚了热门物品的权重，减轻热门视频和大量视频相似的可能性。</p>
+<h4 id="3-2-2-Spark实现"><a href="#3-2-2-Spark实现" class="headerlink" title="3.2.2 Spark实现"></a>3.2.2 Spark实现</h4><p>我们基于spark sql实现了ItemCF，贴一段</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">spark = SparkSession.builder.master(<span class="string">'yarn-client'</span>).appName(<span class="string">'recy_icf_similarity:'</span>+inDate).config(<span class="string">'spark.sql.warehouse.dir'</span>, <span class="string">'/user/hive/warehouse'</span>).enableHiveSupport().getOrCreate()</span><br><span class="line"><span class="comment">#指定spark 分区数</span></span><br><span class="line">spark.sql(<span class="string">"SET spark.sql.shuffle.partitions=2000"</span>)</span><br><span class="line">spark.sql(<span class="string">"drop table if exists da.recy_icf_similarity_mid "</span>)</span><br><span class="line">spark.sql(<span class="string">"create table da.recy_icf_similarity_mid as select a.vid vid_1 , b.vid vid_2 , a.num num_1, b.num num_2, count(1) num_12 from da.recy_icf_similarity_pre a join da.recy_icf_similarity_pre b on (a.diu=b.diu) where a.vid&lt;b.vid group by a.vid, b.vid, a.num, b.num"</span>)</span><br><span class="line"><span class="comment">#计算余弦相似度</span></span><br><span class="line">similarSql = <span class="string">" select vid_1, vid_2, num_12/sqrt(num_1*num_2) similarity from da.recy_icf_similarity_mid"</span></span><br><span class="line">similarDF = spark.sql(similarSql)</span><br><span class="line">similarDF.printSchema()</span><br><span class="line"><span class="comment"># 保存结果</span></span><br><span class="line">similarDF.repartition(<span class="number">300</span>).write.mode(<span class="string">'overwrite'</span>).save(similarDir, format=<span class="string">"parquet"</span>)</span><br><span class="line">spark.stop()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-抄底策略"><a href="#3-3-抄底策略" class="headerlink" title="3.3 抄底策略"></a>3.3 抄底策略</h3><p>抄底策略其实是一个冷启动的问题，策略也非常多。</p>
+<ul>
+<li>近期热门item、新item。</li>
+<li>编辑精选。</li>
+<li>新品类上线。</li>
+<li>同城热门。</li>
+</ul>
+<p>我们目前只生效了热门策略，采用了Hack News的热门算法作为抄底策略，如下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/20467-8f24c3e4a80d5848.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="热门算法"></p>
+<ul>
+<li>P表示视频观看次数。</li>
+<li>T表示距离视频发布时间(单位为小时),加上2是为了防止最新的视频导致分母过小。</li>
+<li>G表示”重力因子”(gravityth power),即为视频衰减系数。</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/20467-73cebaf5f18169b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="热门算法衰减系数"></p>
+<p>我们根据实验结果，确定了G的取值。该算法同时保证了视频的热门程度和新鲜度。sql代码如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vid,title,createtime,hits_total,(<span class="keyword">if</span>( hits_total&gt;=<span class="number">1</span>, hits_total - <span class="number">1</span>,hits_total)/<span class="keyword">power</span>((<span class="keyword">TIMESTAMPDIFF</span>(<span class="keyword">hour</span>,createtime,<span class="keyword">now</span>())+<span class="number">2</span>),<span class="number">1.8</span>)) <span class="keyword">as</span> sc <span class="keyword">FROM</span> <span class="string">`video`</span> <span class="keyword">WHERE</span> <span class="built_in">date</span>(createtime) &gt;=<span class="keyword">NOW</span>() - <span class="built_in">INTERVAL</span> <span class="number">3</span> <span class="keyword">DAY</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="string">`sc`</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-算法融合"><a href="#3-4-算法融合" class="headerlink" title="3.4 算法融合"></a>3.4 算法融合</h3><p>融合策略主要包括以下三类，当然还有ensemble相关的方法：</p>
+<ul>
+<li>加权融合(Weight Merge):根据经验值对不同算法赋给不同的权重，对各个算法产生的候选集按照给定的权重进行加权，然后再按照权重排序</li>
+<li>级联融合(Cascade Merge): 优先采用效果好的算法，当产生的候选集大小不足以满足目标值时，再使用效果次好的算法。</li>
+<li>混合融合(Mix Merge): 不同的算法按照不同的比例产生一定量的候选集，然后叠加产生最终总的候选集。</li>
+</ul>
+<p>我们主要在候选集上使用了mix merge，在结果产出时，采用了cascade merge合并LFM和ItemCF的结果。</p>
+<h2 id="4-服务实现"><a href="#4-服务实现" class="headerlink" title="4.服务实现"></a>4.服务实现</h2><h3 id="4-1-AB分桶服务"><a href="#4-1-AB分桶服务" class="headerlink" title="4.1 AB分桶服务"></a>4.1 AB分桶服务</h3><p>根据用户diu，使用crc32 hash函数对用户取余，分别赋予AB两个类型。客户端拿到abtag后根据服务端数据流实现展示和数据埋点。</p>
+<h3 id="4-2-推荐服务"><a href="#4-2-推荐服务" class="headerlink" title="4.2 推荐服务"></a>4.2 推荐服务</h3><p>个性化推荐系统服务会在app首页打开后被调用，具体服务流程步骤如下：</p>
+<ol>
+<li>通过用户DIU获取推荐模型导出的数据列表</li>
+<li>判断推荐的数据列表是否为空</li>
+<li>推荐的数据列表如果不为空，则执行5</li>
+<li>推荐的数据列表如果为空，则获取抄底的推荐列表，然后执行5</li>
+<li>从推荐的数据列表中过滤点目前首页已经展现的视频</li>
+<li>根据推荐的分数和视频创建时间，将列表进行排序</li>
+<li>返回结果</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/20467-c5d4f88b26c7a72d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="流程图"></p>
+<h3 id="4-3-存储选型"><a href="#4-3-存储选型" class="headerlink" title="4.3 存储选型"></a>4.3 存储选型</h3><p>推荐系统每天出一次推荐结果， 因此<code>推荐结果需要按天区分</code>, 同时需要按diu来快速查询，可以采用的存储有<code>hbase</code>，<code>redis</code>等键值对数据库，<code>mongodb</code>等文档型数据库，或者<br><code>mysql</code>等传统关系型数据库</p>
+<ul>
+<li><strong>hbase</strong> 键值对存储，存储量大，查询速度快，稳定性取决于集群是否高可用，如高可用，可优先选择</li>
+<li><strong>redis</strong> 键值对存储，存储量较大，热数据基于内存存储，查询速度快，可以考虑，不过当每个人的推荐结果N较大时，要考虑存储大小</li>
+<li><strong>mongodb</strong> 文档型数据库，存储量大，热数据同样存储在内存，索引速度接近于redis， 结构化，易维护，可以考虑</li>
+<li><strong>mysql</strong> 关系型数据库， 存储量较大，基于文件索引机制，查询速度较上述存储来说，理论值较低，可以作为备选。</li>
+</ul>
+<p>每个用户的推荐数N=60， 存储占用<code>180g</code>，决定采用hbase 根据rowkey字段做索引， 当我们指定<code>diu</code>和<code>date</code>时，会快速返回rowkey在该范围内的结果。</p>
+<h2 id="5-效果评估"><a href="#5-效果评估" class="headerlink" title="5.效果评估"></a>5.效果评估</h2><h3 id="5-1-离线评估"><a href="#5-1-离线评估" class="headerlink" title="5.1 离线评估"></a>5.1 离线评估</h3><p>采用融合多维度用户行为数据线性转换成显式反馈评分。由于采用了多维度数据，算法模型效果大幅提升，结果如下：</p>
+<ul>
+<li>RMSE从4.1提升到1.0。(Netfix大赛冠军大概在0.8左右)</li>
+<li>P@K从0.6705提升到0.938。</li>
+<li>预测覆盖率为99%,推荐覆盖率为90%。</li>
+</ul>
+<h3 id="5-2-A-B测试"><a href="#5-2-A-B测试" class="headerlink" title="5.2 A/B测试"></a>5.2 A/B测试</h3><p>猜你喜欢模块已经在官方渠道测试将近三周，展现形式如下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/20467-134910bd586cd114.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="猜你喜欢"></p>
+<p>通过AB测试，可以看到首页模块的点击率整体提升了10%，人均观看时长整体提升5%。目前可以看到，猜你喜欢模块效果略优于每日精选。</p>
+<h2 id="6-改进与展望"><a href="#6-改进与展望" class="headerlink" title="6.改进与展望"></a>6.改进与展望</h2><p>第一期开发的时间相对较短，人力也非常不足，期间还有很多数据分析、挖掘工作需要兼顾，整体工作相对简单。未来第二期，主要精力集中在近线和在线的模块开发，以及学习排序。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/24/糖豆推荐系统第一期开发与评估报告/" data-id="cjxbtish00005ol4ylc9gvw20" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/24/糖豆推荐系统第一期开发与评估报告/" data-id="cjxbtl6zv0006qy4yzc46q3n1" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recommendation-system/">recommendation system</a></li></ul>
+
     </footer>
   </div>
   
@@ -184,7 +306,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/24/糖豆数据仓库模型/" data-id="cjxbtish6000dol4ymin32ic6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/24/糖豆数据仓库模型/" data-id="cjxbtl6zx0009qy4yqxzee32w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/big-data/">big data</a></li></ul>
@@ -260,7 +382,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/24/单步强化学习在糖豆推荐系统的应用/" data-id="cjxbtisgy0004ol4ywa6gysz4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/24/单步强化学习在糖豆推荐系统的应用/" data-id="cjxbtl6zu0005qy4y1b95xwz4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reinforcement-learning/">reinforcement learning</a></li></ul>
@@ -343,7 +465,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/24/糖豆实时推荐系统设计与实现/" data-id="cjxbtish4000bol4y5emj3tlk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/24/糖豆实时推荐系统设计与实现/" data-id="cjxbtl6zy000bqy4yw616347u" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recommendation-system/">recommendation system</a></li></ul>
@@ -445,7 +567,7 @@ FM是不错的ML模型，用深度学习来结合，得到一个更强的模型�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/24/推荐资料汇总与解说/" data-id="cjxbtish30009ol4yxvffawec" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/24/推荐资料汇总与解说/" data-id="cjxbtl6zz000dqy4y3e743jpz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recommendation-system/">recommendation system</a></li></ul>
@@ -550,7 +672,7 @@ FM是不错的ML模型，用深度学习来结合，得到一个更强的模型�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/24/一站式机器学习平台资源介绍/" data-id="cjxbtisgv0003ol4y6cumipza" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/24/一站式机器学习平台资源介绍/" data-id="cjxbtl6zp0002qy4y97c2462a" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ml/">-ml</a></li></ul>
@@ -647,7 +769,7 @@ FM是不错的ML模型，用深度学习来结合，得到一个更强的模型�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/24/DeepFM理论与其应用/" data-id="cjxbtisgl0000ol4yug9omlwg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/24/DeepFM理论与其应用/" data-id="cjxbtl6zm0001qy4y21vhv2js" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recommendation-system/">recommendation system</a></li></ul>
@@ -687,7 +809,7 @@ FM是不错的ML模型，用深度学习来结合，得到一个更强的模型�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/22/胡椒全球史读书笔记/" data-id="cjxbtish7000gol4yyii459xj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/22/胡椒全球史读书笔记/" data-id="cjxbtl70n000oqy4ypkfyhy4t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/history/">history</a></li></ul>
@@ -748,7 +870,7 @@ FM是不错的ML模型，用深度学习来结合，得到一个更强的模型�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/22/我眼中的云计算/" data-id="cjxbtish20008ol4y4eiob7qf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/22/我眼中的云计算/" data-id="cjxbtl6zt0004qy4yd69t37ws" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cloud-computing/">cloud computing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/history/">history</a></li></ul>
@@ -799,7 +921,7 @@ FM是不错的ML模型，用深度学习来结合，得到一个更强的模型�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/22/hello-world/" data-id="cjxbtisgr0001ol4yexh4ebnh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/22/hello-world/" data-id="cjxbtl6zh0000qy4yfekudzbb" class="article-share-link">Share</a>
       
       
     </footer>
