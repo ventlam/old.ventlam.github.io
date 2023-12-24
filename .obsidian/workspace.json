@@ -1,0 +1,198 @@
+{
+  "main": {
+    "id": "ceb50eb12572a87a",
+    "type": "split",
+    "children": [
+      {
+        "id": "2434a2a1929f1d03",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "42a1d80a8f241f2b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "source/_posts/hello-world.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "1a73021eb8a1d36e",
+    "type": "split",
+    "children": [
+      {
+        "id": "e2987c1c49ab5871",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b708dce2b4e312ec",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "e00aac8daeef5243",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "075f891c97776d31",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "e20782c631d3d194",
+    "type": "split",
+    "children": [
+      {
+        "id": "ee7808885f8c7944",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "290f351b1a85a883",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "source/_posts/hello-world.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "284ecc7ef548b750",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "source/_posts/hello-world.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "744f8c74c40149be",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "ce78690857b69765",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "source/_posts/hello-world.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "b708dce2b4e312ec",
+  "lastOpenFiles": [
+    "source/_posts/从零开始打造更强的私有GPT大模型- RAG教程01.md",
+    "db.json",
+    "public/index.html",
+    "public/js/script.js",
+    "public/js/jquery-3.6.4.min.js",
+    "public/js",
+    "public/css/images/banner.jpg",
+    "public/css/style.css",
+    "public/css/images",
+    "public/css",
+    "public/fancybox/jquery.fancybox.min.js",
+    "public/fancybox/jquery.fancybox.min.css",
+    "themes/next/source/images/logo.svg",
+    "themes/next/source/images/favicon-32x32-next.png",
+    "themes/next/source/images/favicon-16x16-next.png",
+    "themes/next/source/images/cc-zero.svg",
+    "themes/next/source/images/cc-by.svg",
+    "themes/next/source/images/cc-by-sa.svg",
+    "themes/next/source/images/cc-by-nd.svg",
+    "themes/next/source/images/cc-by-nc.svg",
+    "themes/next/source/images/cc-by-nc-sa.svg",
+    "themes/next/docs/zh-CN/UPDATE-FROM-5.1.X.md",
+    "themes/next/docs/zh-CN/README.md",
+    "themes/next/docs/zh-CN/MATH.md",
+    "themes/next/docs/zh-CN/LEANCLOUD-COUNTER-SECURITY.md",
+    "themes/next/docs/zh-CN/INSTALLATION.md",
+    "themes/next/docs/zh-CN/DATA-FILES.md",
+    "themes/next/docs/zh-CN/CONTRIBUTING.md",
+    "themes/next/docs/zh-CN/CODE_OF_CONDUCT.md",
+    "themes/next/docs/zh-CN/ALGOLIA-SEARCH.md",
+    "themes/next/docs/ru/UPDATE-FROM-5.1.X.md",
+    "themes/next/docs/ru/README.md",
+    "themes/next/docs/ru/INSTALLATION.md",
+    "themes/next/docs/ru/DATA-FILES.md",
+    "themes/next/docs/UPDATE-FROM-5.1.X.md",
+    "themes/next/docs/MATH.md",
+    "themes/next/docs/LEANCLOUD-COUNTER-SECURITY.md",
+    "themes/next/docs/INSTALLATION.md",
+    "themes/next/docs/DATA-FILES.md",
+    "themes/next/docs/AUTHORS.md",
+    "themes/next/docs/ALGOLIA-SEARCH.md",
+    "themes/next/docs/AGPL3.md",
+    "themes/next/README.md",
+    "themes/next/LICENSE.md",
+    "node_modules/hexo-theme-fluid/README.md",
+    "node_modules/source-map/CHANGELOG.md"
+  ]
+}
